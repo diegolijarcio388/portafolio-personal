@@ -15,7 +15,7 @@
       --bg2:       #111114;
       --bg3:       #18181C;
       --border:    #222228;
-      --muted:     #48484F;
+      --muted:     #60606A;
       --body:      #8E8E99;
       --text:      #DDDDE8;
       --accent:    #5B7FFF;
@@ -298,7 +298,7 @@
     /* ── SKILLS ── */
     .skills-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      grid-template-columns: repeat(6, 1fr);
       gap: 1px;
       background: var(--border);
       border: 1px solid var(--border);
@@ -309,6 +309,17 @@
     .skill-group {
       background: var(--bg2);
       padding: 1.5rem;
+    }
+
+    .skill-group:nth-child(1),
+    .skill-group:nth-child(2),
+    .skill-group:nth-child(3) {
+      grid-column: span 2;
+    }
+
+    .skill-group:nth-child(4),
+    .skill-group:nth-child(5) {
+      grid-column: span 3;
     }
 
     .skill-group-title {
@@ -468,7 +479,10 @@
       .nav-links { display: none; }
       #hero, section { padding-left: 1.25rem; padding-right: 1.25rem; }
       .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      .projects-grid { grid-template-columns: 1fr; }
       .project-row { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .skill-group:nth-child(n) { grid-column: span 1; }
       footer { flex-direction: column; gap: 1rem; text-align: center; }
     }
 
@@ -506,19 +520,23 @@
   <section id="hero">
     <p class="hero-tag">Disponible para trabajar</p>
     <h1 class="hero-name">Diego Lijarcio Merino</h1>
-    <p class="hero-title">Desarrollador <strong>backend · frontend · mobile</strong></p>
+    <p class="hero-title">Desarrollador de Software Junior · <strong>Backend &amp; Web</strong></p>
 
     <p class="hero-bio">
-      He pasado los últimos dos años construyendo cosas reales: un ERP de fichajes para una empresa industrial,
-      módulos backend en producción con Symfony, y apps Android que consumen APIs externas.
-      <b>Kotlin, PHP, Astro, Swift.</b> Inglés C1 Cambridge.
-      Buscando equipo técnico en presencial, remoto o híbrido.
+      Desarrollador de software junior titulado en DAM, con experiencia práctica en desarrollo web y backend.
+      He trabajado en un módulo ERP interno con <b>Astro, JavaScript y Tailwind CSS</b>, y en backend con
+      <b>PHP y Symfony</b>. Actualmente refuerzo mi perfil backend con <b>Java y Spring Boot</b>.
+      Inglés C1 Cambridge.
     </p>
 
     <div class="hero-actions">
       <a class="btn-primary" href="mailto:diegolijarcio388@gmail.com">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
-        diegolijarcio388@gmail.com
+        Contactar
+      </a>
+      <a class="btn-ghost" href="./assests/CV_Diego.pdf" download="Diego_Lijarcio_Merino_CV.pdf">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4-4m-4 4-4-4"/><path d="M5 21h14"/></svg>
+        Descargar CV
       </a>
       <a class="btn-ghost" href="https://github.com/diegolijarcio388" target="_blank" rel="noopener">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12"/></svg>
@@ -531,10 +549,10 @@
     </div>
 
     <div class="hero-meta">
-      <span class="meta-item"><span class="meta-dot live"></span>Buscando trabajo</span>
       <span class="meta-item"><span class="meta-dot"></span>Jaén, España</span>
+      <span class="meta-item"><span class="meta-dot"></span>Abierto a reubicación</span>
       <span class="meta-item"><span class="meta-dot"></span>Inglés C1 CAE</span>
-      <span class="meta-item"><span class="meta-dot"></span>Presencial / Remoto / Híbrido</span>
+      <span class="meta-item"><span class="meta-dot"></span>Presencial / Híbrido / Remoto</span>
     </div>
   </section>
 
@@ -551,30 +569,28 @@
         <div>
           <p class="exp-company">CETEMET · Jaén</p>
           <p class="exp-role">Frontend Developer — Prácticas</p>
-          <p class="exp-desc">Diseñé y construí desde cero un módulo ERP para gestión de fichajes y permisos. Decidí la arquitectura frontend de forma autónoma y orienté el diseño a usuarios no técnicos en entorno industrial. Parte del trabajo fue coordinar con el equipo vía Figma para que lo que se implementaba coincidiera con lo acordado.</p>
+          <p class="exp-desc">Participé en el desarrollo y ampliación de un módulo de un ERP interno para el registro de fichajes y la gestión de permisos de empleados. Trabajé principalmente con <b>Astro, JavaScript y Tailwind CSS</b>, implementando y mejorando funcionalidades del panel de administración orientadas a usuarios no técnicos. Trabajé sobre una base de código existente y participé en decisiones relacionadas con la estructura y la interfaz del módulo.</p>
           <div class="exp-tags">
             <span class="tag">Astro</span>
-            <span class="tag">Tailwind CSS</span>
             <span class="tag">JavaScript</span>
-            <span class="tag">Figma</span>
+            <span class="tag">Tailwind CSS</span>
             <span class="tag">Scrum</span>
           </div>
         </div>
       </div>
 
       <div class="exp-item">
-        <div class="exp-date">Ene – Abr<br>2025</div>
+        <div class="exp-date">Ene – Feb<br>2025</div>
         <div>
           <p class="exp-company">CODE ARTS</p>
-          <p class="exp-role">Backend Developer — Prácticas</p>
-          <p class="exp-desc">Backend con Symfony en producción real. Estandaricé los entornos locales del equipo con Docker, lo que eliminó una clase entera de bugs por diferencias entre dev y producción. También optimicé consultas sobre SQLite y DynamoDB que estaban causando problemas de rendimiento.</p>
+          <p class="exp-role">Backend Developer Junior — Prácticas</p>
+          <p class="exp-desc">Realicé tareas de iniciación y apoyo en backend sobre un proyecto existente con <b>PHP y Symfony</b>. Utilicé <b>Docker</b> como parte del entorno de desarrollo y realicé operaciones básicas con <b>SQLite y DynamoDB</b>, familiarizándome con el trabajo sobre una base de código y un entorno profesional ya establecidos.</p>
           <div class="exp-tags">
-            <span class="tag">Symfony</span>
             <span class="tag">PHP</span>
+            <span class="tag">Symfony</span>
             <span class="tag">Docker</span>
             <span class="tag">SQLite</span>
             <span class="tag">DynamoDB</span>
-            <span class="tag">Postman</span>
           </div>
         </div>
       </div>
@@ -584,12 +600,12 @@
         <div>
           <p class="exp-company">CESUR Linares</p>
           <p class="exp-role">Técnico Superior en DAM</p>
-          <p class="exp-desc">Desarrollo de aplicaciones multiplataforma: backend en Java y PHP, móvil nativo con Kotlin (Android) y Swift (iOS), bases de datos relacionales y diseño de interfaces con Figma.</p>
+          <p class="exp-desc">Formación orientada al desarrollo de aplicaciones multiplataforma, con trabajo práctico en backend, desarrollo web, bases de datos y aplicaciones móviles para Android e iOS.</p>
           <div class="exp-tags">
             <span class="tag">Java</span>
+            <span class="tag">PHP</span>
             <span class="tag">Kotlin</span>
             <span class="tag">Swift</span>
-            <span class="tag">PHP / Laravel</span>
             <span class="tag">MySQL</span>
           </div>
         </div>
@@ -600,7 +616,7 @@
         <div>
           <p class="exp-company">Cambridge Assessment English</p>
           <p class="exp-role">C1 Advanced (CAE)</p>
-          <p class="exp-desc">Certificación oficial de nivel avanzado. Puedo leer documentación técnica, participar en reuniones y comunicarme con equipos internacionales sin fricción.</p>
+          <p class="exp-desc">Certificación oficial de nivel C1 de inglés. Capacidad para trabajar con documentación técnica, comunicarse en entornos profesionales y colaborar con equipos internacionales.</p>
           <div class="exp-tags">
             <span class="tag">Inglés C1</span>
             <span class="tag">Cambridge CAE</span>
@@ -621,24 +637,32 @@
       <div class="skill-group">
         <p class="skill-group-title">Backend</p>
         <div class="skill-tags">
+          <span class="skill-tag">Java</span>
+          <span class="skill-tag">Spring Boot</span>
           <span class="skill-tag">PHP</span>
           <span class="skill-tag">Laravel</span>
           <span class="skill-tag">Symfony</span>
-          <span class="skill-tag">Java</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <p class="skill-group-title">Bases de datos</p>
+        <div class="skill-tags">
           <span class="skill-tag">MySQL</span>
+          <span class="skill-tag">MariaDB</span>
           <span class="skill-tag">SQLite</span>
           <span class="skill-tag">DynamoDB</span>
         </div>
       </div>
 
       <div class="skill-group">
-        <p class="skill-group-title">Frontend & Web</p>
+        <p class="skill-group-title">Frontend &amp; Web</p>
         <div class="skill-tags">
           <span class="skill-tag">Astro</span>
           <span class="skill-tag">JavaScript</span>
           <span class="skill-tag">HTML5</span>
           <span class="skill-tag">CSS3</span>
-          <span class="skill-tag">Tailwind</span>
+          <span class="skill-tag">Tailwind CSS</span>
         </div>
       </div>
 
@@ -648,6 +672,8 @@
           <span class="skill-tag">Kotlin</span>
           <span class="skill-tag">Android SDK</span>
           <span class="skill-tag">Swift</span>
+          <span class="skill-tag">SwiftUI</span>
+          <span class="skill-tag">UIKit</span>
           <span class="skill-tag">Xcode</span>
         </div>
       </div>
@@ -656,10 +682,11 @@
         <p class="skill-group-title">Herramientas</p>
         <div class="skill-tags">
           <span class="skill-tag">Git</span>
+          <span class="skill-tag">GitHub</span>
           <span class="skill-tag">Docker</span>
+          <span class="skill-tag">Maven</span>
           <span class="skill-tag">Postman</span>
           <span class="skill-tag">Figma</span>
-          <span class="skill-tag">Scrum</span>
         </div>
       </div>
     </div>
@@ -676,14 +703,13 @@
 
       <div class="project-row">
         <div>
-          <p class="project-type">ERP · Frontend · UX</p>
-          <h3 class="project-name">Sistema de Fichajes — CETEMET</h3>
-          <p class="project-desc">Módulo ERP interno construido durante las prácticas. Cubre registro de fichajes, gestión de permisos y panel de administración. Lo diseñé pensando en el personal del centro, no en otros devs.</p>
+          <p class="project-type">ERP · Web · Prácticas</p>
+          <h3 class="project-name">ERP interno — CETEMET</h3>
+          <p class="project-desc">Desarrollo y ampliación de un módulo de un ERP interno para el registro de fichajes y la gestión de permisos de empleados. Trabajé sobre una base de código existente, implementando funcionalidades del panel de administración y participando en decisiones de estructura e interfaz.</p>
           <div class="exp-tags">
             <span class="tag">Astro</span>
-            <span class="tag">Tailwind</span>
             <span class="tag">JavaScript</span>
-            <span class="tag">Figma</span>
+            <span class="tag">Tailwind CSS</span>
           </div>
         </div>
         <a class="project-link" href="https://github.com/diegolijarcio388/Repositorio-ERP-Practicas" target="_blank" rel="noopener">
@@ -694,14 +720,33 @@
 
       <div class="project-row">
         <div>
-          <p class="project-type">Web · Full-stack</p>
-          <h3 class="project-name">ServiHogar</h3>
-          <p class="project-desc">Plataforma de gestión de servicios a domicilio con autenticación, panel de admin y solicitudes. Backend en Laravel con MySQL, frontend en Astro.</p>
+          <p class="project-type">Backend · REST API</p>
+          <h3 class="project-name">Task Manager API</h3>
+          <p class="project-desc">API REST desarrollada con Java y Spring Boot para la gestión de tareas, con operaciones CRUD, persistencia en MariaDB, arquitectura por capas y gestión personalizada de errores.</p>
           <div class="exp-tags">
-            <span class="tag">Laravel</span>
-            <span class="tag">MySQL</span>
-            <span class="tag">Astro</span>
-            <span class="tag">Tailwind</span>
+            <span class="tag">Java</span>
+            <span class="tag">Spring Boot</span>
+            <span class="tag">Spring Data JPA</span>
+            <span class="tag">MariaDB</span>
+            <span class="tag">Maven</span>
+          </div>
+        </div>
+        <a class="project-link" href="https://github.com/diegolijarcio388/Task-Manager-Api" target="_blank" rel="noopener">
+          GitHub
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </a>
+      </div>
+
+      <div class="project-row">
+        <div>
+          <p class="project-type">iOS · Swift</p>
+          <h3 class="project-name">ServiHogar — Aplicación iOS</h3>
+          <p class="project-desc">Aplicación desarrollada como parte del proyecto final de DAM. Me encargué íntegramente de la interfaz y del flujo de navegación de la versión iOS, incluyendo la selección y captura de imágenes.</p>
+          <div class="exp-tags">
+            <span class="tag">Swift</span>
+            <span class="tag">SwiftUI</span>
+            <span class="tag">UIKit</span>
+            <span class="tag">Xcode</span>
           </div>
         </div>
         <a class="project-link" href="https://github.com/diegolijarcio388/Proyecto-ServiHogar" target="_blank" rel="noopener">
@@ -713,30 +758,14 @@
       <div class="project-row">
         <div>
           <p class="project-type">Android · Kotlin</p>
-          <h3 class="project-name">F1 Results</h3>
-          <p class="project-desc">App nativa de Fórmula 1. Consume una API REST externa, arquitectura limpia y gestión del ciclo de vida de actividades y fragmentos.</p>
+          <h3 class="project-name">Game of Thrones — Android</h3>
+          <p class="project-desc">Aplicación Android para explorar personajes de Game of Thrones, con login, listado mediante RecyclerView, vista de detalle y datos cargados desde un fichero JSON local.</p>
           <div class="exp-tags">
             <span class="tag">Kotlin</span>
-            <span class="tag">Android SDK</span>
-            <span class="tag">REST API</span>
-          </div>
-        </div>
-        <a class="project-link" href="https://github.com/diegolijarcio388/results-f1-kotlin" target="_blank" rel="noopener">
-          GitHub
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-        </a>
-      </div>
-
-      <div class="project-row">
-        <div>
-          <p class="project-type">Android · Kotlin</p>
-          <h3 class="project-name">Game of Thrones App</h3>
-          <p class="project-desc">App con listado de personajes, búsqueda y vista de detalle. Clean Architecture, consumo de API y RecyclerView con adaptador personalizado.</p>
-          <div class="exp-tags">
-            <span class="tag">Kotlin</span>
-            <span class="tag">Android SDK</span>
-            <span class="tag">Clean Architecture</span>
-            <span class="tag">REST API</span>
+            <span class="tag">RecyclerView</span>
+            <span class="tag">Navigation Component</span>
+            <span class="tag">Gson</span>
+            <span class="tag">Glide</span>
           </div>
         </div>
         <a class="project-link" href="https://github.com/diegolijarcio388/Game-of-Thrones-Kotlin" target="_blank" rel="noopener">
@@ -754,12 +783,12 @@
   <section id="contact" class="fade-up">
     <div class="contact-wrap">
       <p class="section-eyebrow" style="text-align:center">Contacto</p>
-      <h2 class="contact-headline">Si tienes algo<br>interesante, cuéntame.</h2>
-      <p class="contact-sub">Busco mi primera posición estable como desarrollador. Si hay encaje, hablamos.</p>
+      <h2 class="contact-headline">¿Hablamos?</h2>
+      <p class="contact-sub">Busco mi primera posición estable como desarrollador, especialmente en oportunidades relacionadas con backend y desarrollo web. Si crees que mi perfil puede encajar en tu equipo, estaré encantado de hablar.</p>
       <div class="contact-links">
         <a class="btn-primary" href="mailto:diegolijarcio388@gmail.com">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
-          diegolijarcio388@gmail.com
+          Contactar por email
         </a>
         <a class="btn-ghost" href="https://www.linkedin.com/in/diego-lijarcio-merino/" target="_blank" rel="noopener">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
