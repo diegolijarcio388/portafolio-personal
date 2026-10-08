@@ -1,843 +1,841 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Diego Lijarcio — Dev</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg:        #0A0A0C;
-      --bg2:       #111114;
-      --bg3:       #18181C;
-      --border:    #222228;
-      --muted:     #60606A;
-      --body:      #8E8E99;
-      --text:      #DDDDE8;
-      --accent:    #5B7FFF;
-      --accent2:   #8BA3FF;
-      --white:     #F0F0F5;
-      --green:     #34D399;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 16px;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.1rem 2.5rem;
-      background: rgba(10,10,12,0.90);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav-logo {
-      font-family: 'DM Mono', monospace;
-      font-weight: 500;
-      font-size: 1rem;
-      color: var(--white);
-      letter-spacing: -0.01em;
-    }
-    .nav-logo em { color: var(--accent); font-style: normal; }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-    .nav-links a {
-      font-size: 0.875rem;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color .2s;
-    }
-    .nav-links a:hover { color: var(--white); }
-
-    .nav-cta {
-      font-size: 0.82rem;
-      font-weight: 500;
-      color: var(--white);
-      background: var(--accent);
-      text-decoration: none;
-      padding: 0.45rem 1.1rem;
-      border-radius: 6px;
-      transition: opacity .2s;
-      letter-spacing: 0.01em;
-    }
-    .nav-cta:hover { opacity: 0.85; }
-
-    /* ── HERO ── */
-    #hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 8rem 2.5rem 5rem;
-      max-width: 860px;
-      margin: 0 auto;
-    }
-
-    .hero-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.75rem;
-      color: var(--green);
-      letter-spacing: 0.05em;
-      margin-bottom: 2rem;
-    }
-    .hero-tag::before {
-      content: '';
-      display: inline-block;
-      width: 6px; height: 6px;
-      background: var(--green);
-      border-radius: 50%;
-    }
-
-    .hero-name {
-      font-size: clamp(2.6rem, 6.5vw, 5rem);
-      font-weight: 600;
-      line-height: 1.05;
-      letter-spacing: -0.035em;
-      color: var(--white);
-      margin-bottom: 0.75rem;
-    }
-
-    .hero-title {
-      font-size: clamp(1rem, 2.2vw, 1.4rem);
-      font-weight: 300;
-      color: var(--body);
-      letter-spacing: -0.01em;
-      margin-bottom: 2.5rem;
-    }
-    .hero-title strong { color: var(--accent2); font-weight: 500; }
-
-    .hero-bio {
-      font-size: 1rem;
-      color: var(--body);
-      max-width: 520px;
-      line-height: 1.8;
-      margin-bottom: 2.5rem;
-    }
-    .hero-bio b { color: var(--text); font-weight: 500; }
-
-    .hero-actions {
-      display: flex;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-      margin-bottom: 3.5rem;
-    }
-
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--accent);
-      color: var(--white);
-      font-weight: 500;
-      font-size: 0.875rem;
-      padding: 0.7rem 1.4rem;
-      border-radius: 6px;
-      text-decoration: none;
-      transition: opacity .2s, transform .15s;
-      letter-spacing: 0.005em;
-    }
-    .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
-
-    .btn-ghost {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: transparent;
-      color: var(--body);
-      font-weight: 400;
-      font-size: 0.875rem;
-      padding: 0.7rem 1.4rem;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-      text-decoration: none;
-      transition: border-color .2s, color .2s, transform .15s;
-    }
-    .btn-ghost:hover { border-color: var(--muted); color: var(--white); transform: translateY(-1px); }
-
-    .hero-meta {
-      display: flex;
-      gap: 2rem;
-      flex-wrap: wrap;
-    }
-    .meta-item {
-      display: flex;
-      align-items: center;
-      gap: 0.45rem;
-      font-size: 0.8rem;
-      color: var(--muted);
-      font-family: 'DM Mono', monospace;
-    }
-    .meta-dot {
-      width: 5px; height: 5px;
-      border-radius: 50%;
-      background: var(--muted);
-    }
-    .meta-dot.live { background: var(--green); box-shadow: 0 0 0 2px rgba(52,211,153,.2); }
-
-    /* ── SECTIONS ── */
-    section {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 5rem 2.5rem;
-    }
-
-    .section-eyebrow {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.72rem;
-      color: var(--accent);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 0.6rem;
-    }
-
-    .section-title {
-      font-size: clamp(1.5rem, 3vw, 2.2rem);
-      font-weight: 600;
-      color: var(--white);
-      letter-spacing: -0.025em;
-      margin-bottom: 2.5rem;
-    }
-
-    /* ── DIVIDER ── */
-    .divider {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 2.5rem;
-    }
-    .divider hr {
-      border: none;
-      border-top: 1px solid var(--border);
-    }
-
-    /* ── EXPERIENCE ── */
-    .exp-list { display: flex; flex-direction: column; }
-
-    .exp-item {
-      display: grid;
-      grid-template-columns: 130px 1fr;
-      gap: 2.5rem;
-      padding: 2.5rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .exp-item:first-child { border-top: 1px solid var(--border); }
-
-    .exp-date {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.72rem;
-      color: var(--muted);
-      padding-top: 0.25rem;
-      line-height: 1.7;
-    }
-
-    .exp-company {
-      font-size: 0.72rem;
-      font-weight: 500;
-      color: var(--accent);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 0.25rem;
-    }
-
-    .exp-role {
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: var(--white);
-      margin-bottom: 0.65rem;
-      letter-spacing: -0.01em;
-    }
-
-    .exp-desc {
-      font-size: 0.925rem;
-      color: var(--body);
-      line-height: 1.75;
-      margin-bottom: 1rem;
-    }
-
-    .exp-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.35rem;
-    }
-
-    .tag {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.68rem;
-      color: var(--muted);
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      padding: 0.2rem 0.5rem;
-      border-radius: 4px;
-      letter-spacing: 0.02em;
-    }
-
-    /* ── SKILLS ── */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-    }
-
-    .skill-group {
-      background: var(--bg2);
-      padding: 1.5rem;
-    }
-
-    .skill-group:nth-child(1),
-    .skill-group:nth-child(2),
-    .skill-group:nth-child(3) {
-      grid-column: span 2;
-    }
-
-    .skill-group:nth-child(4),
-    .skill-group:nth-child(5) {
-      grid-column: span 3;
-    }
-
-    .skill-group-title {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.68rem;
-      font-weight: 500;
-      color: var(--muted);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-
-    .skill-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-    }
-
-    .skill-tag {
-      font-size: 0.82rem;
-      color: var(--text);
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      padding: 0.25rem 0.6rem;
-      border-radius: 4px;
-      transition: border-color .2s, color .2s;
-    }
-    .skill-tag:hover { border-color: var(--accent); color: var(--accent2); }
-
-    /* ── PROJECTS ── */
-    .projects-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      overflow: hidden;
-    }
-
-    .project-row {
-      background: var(--bg2);
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: start;
-      gap: 2rem;
-      padding: 2rem 2rem;
-      transition: background .2s;
-    }
-    .project-row:hover { background: var(--bg3); }
-
-    .project-type {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.68rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 0.4rem;
-    }
-
-    .project-name {
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: var(--white);
-      letter-spacing: -0.01em;
-      margin-bottom: 0.55rem;
-    }
-
-    .project-desc {
-      font-size: 0.9rem;
-      color: var(--body);
-      line-height: 1.7;
-      max-width: 540px;
-      margin-bottom: 1rem;
-    }
-
-    .project-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.72rem;
-      color: var(--accent);
-      text-decoration: none;
-      letter-spacing: 0.02em;
-      white-space: nowrap;
-      padding-top: 0.25rem;
-      transition: color .2s;
-    }
-    .project-link:hover { color: var(--accent2); }
-
-    /* ── CONTACT ── */
-    #contact {
-      text-align: center;
-    }
-
-    .contact-wrap {
-      max-width: 480px;
-      margin: 0 auto;
-    }
-
-    .contact-headline {
-      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
-      font-weight: 600;
-      color: var(--white);
-      letter-spacing: -0.03em;
-      margin-bottom: 1rem;
-      line-height: 1.1;
-    }
-
-    .contact-sub {
-      font-size: 0.95rem;
-      color: var(--body);
-      margin-bottom: 2rem;
-      line-height: 1.7;
-    }
-
-    .contact-links {
-      display: flex;
-      justify-content: center;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 1.75rem 2.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      max-width: 860px;
-      margin: 0 auto;
-    }
-
-    .footer-text {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.72rem;
-      color: var(--muted);
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 1.5rem;
-    }
-    .footer-links a {
-      font-size: 0.8rem;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color .2s;
-    }
-    .footer-links a:hover { color: var(--text); }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 680px) {
-      nav { padding: 1rem 1.25rem; }
-      .nav-links { display: none; }
-      #hero, section { padding-left: 1.25rem; padding-right: 1.25rem; }
-      .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
-      .projects-grid { grid-template-columns: 1fr; }
-      .project-row { grid-template-columns: 1fr; }
-      .skills-grid { grid-template-columns: 1fr; }
-      .skill-group:nth-child(n) { grid-column: span 1; }
-      footer { flex-direction: column; gap: 1rem; text-align: center; }
-    }
-
-    /* ── SCROLL FADE ── */
-    .fade-up {
-      opacity: 0;
-      transform: translateY(18px);
-      transition: opacity .55s ease, transform .55s ease;
-    }
-    .fade-up.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .fade-up { opacity: 1; transform: none; transition: none; }
-    }
-  </style>
-</head>
-<body>
-
-  <!-- NAV -->
-  <nav>
-    <span class="nav-logo">diego<em>.</em>dev</span>
-    <ul class="nav-links">
-      <li><a href="#experience">Experiencia</a></li>
-      <li><a href="#skills">Stack</a></li>
-      <li><a href="#projects">Proyectos</a></li>
-      <li><a href="#contact">Contacto</a></li>
-    </ul>
-    <a class="nav-cta" href="mailto:diegolijarcio388@gmail.com">Escríbeme</a>
-  </nav>
-
-  <!-- HERO -->
-  <section id="hero">
-    <p class="hero-tag">Disponible para trabajar</p>
-    <h1 class="hero-name">Diego Lijarcio Merino</h1>
-    <p class="hero-title">Desarrollador de Software Junior · <strong>Backend &amp; Web</strong></p>
-
-    <p class="hero-bio">
-      Desarrollador de software junior titulado en DAM, con experiencia práctica en desarrollo web y backend.
-      He trabajado en un módulo ERP interno con <b>Astro, JavaScript y Tailwind CSS</b>, y en backend con
-      <b>PHP y Symfony</b>. Actualmente refuerzo mi perfil backend con <b>Java y Spring Boot</b>.
-      Inglés C1 Cambridge.
-    </p>
-
-    <div class="hero-actions">
-      <a class="btn-primary" href="mailto:diegolijarcio388@gmail.com">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
-        Contactar
-      </a>
-      <button class="btn-ghost" type="button" onclick="descargarCV()" style="cursor:pointer; font-family:inherit;">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4-4m-4 4-4-4"/><path d="M5 21h14"/></svg>
-        Descargar CV
-      </button>
-      <a class="btn-ghost" href="https://github.com/diegolijarcio388" target="_blank" rel="noopener">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12"/></svg>
-        GitHub
-      </a>
-      <a class="btn-ghost" href="https://www.linkedin.com/in/diego-lijarcio-merino/" target="_blank" rel="noopener">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-        LinkedIn
-      </a>
-    </div>
-
-    <div class="hero-meta">
-      <span class="meta-item"><span class="meta-dot"></span>Jaén, España</span>
-      <span class="meta-item"><span class="meta-dot"></span>Abierto a reubicación</span>
-      <span class="meta-item"><span class="meta-dot"></span>Inglés C1 CAE</span>
-      <span class="meta-item"><span class="meta-dot"></span>Presencial / Híbrido / Remoto</span>
-    </div>
-  </section>
-
-  <div class="divider"><hr /></div>
-
-  <!-- EXPERIENCE -->
-  <section id="experience" class="fade-up">
-    <p class="section-eyebrow">Trayectoria</p>
-    <h2 class="section-title">Experiencia & Formación</h2>
-
-    <div class="exp-list">
-      <div class="exp-item">
-        <div class="exp-date">Abr – Jun<br>2026</div>
-        <div>
-          <p class="exp-company">CETEMET · Jaén</p>
-          <p class="exp-role">Frontend Developer — Prácticas</p>
-          <p class="exp-desc">Participé en el desarrollo y ampliación de un módulo de un ERP interno para el registro de fichajes y la gestión de permisos de empleados. Trabajé principalmente con <b>Astro, JavaScript y Tailwind CSS</b>, implementando y mejorando funcionalidades del panel de administración orientadas a usuarios no técnicos. Trabajé sobre una base de código existente y participé en decisiones relacionadas con la estructura y la interfaz del módulo.</p>
-          <div class="exp-tags">
-            <span class="tag">Astro</span>
-            <span class="tag">JavaScript</span>
-            <span class="tag">Tailwind CSS</span>
-            <span class="tag">Scrum</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="exp-item">
-        <div class="exp-date">Ene – Feb<br>2025</div>
-        <div>
-          <p class="exp-company">CODE ARTS</p>
-          <p class="exp-role">Backend Developer Junior — Prácticas</p>
-          <p class="exp-desc">Realicé tareas de iniciación y apoyo en backend sobre un proyecto existente con <b>PHP y Symfony</b>. Utilicé <b>Docker</b> como parte del entorno de desarrollo y realicé operaciones básicas con <b>SQLite y DynamoDB</b>, familiarizándome con el trabajo sobre una base de código y un entorno profesional ya establecidos.</p>
-          <div class="exp-tags">
-            <span class="tag">PHP</span>
-            <span class="tag">Symfony</span>
-            <span class="tag">Docker</span>
-            <span class="tag">SQLite</span>
-            <span class="tag">DynamoDB</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="exp-item">
-        <div class="exp-date">2024 – 2026</div>
-        <div>
-          <p class="exp-company">CESUR Linares</p>
-          <p class="exp-role">Técnico Superior en DAM</p>
-          <p class="exp-desc">Formación orientada al desarrollo de aplicaciones multiplataforma, con trabajo práctico en backend, desarrollo web, bases de datos y aplicaciones móviles para Android e iOS.</p>
-          <div class="exp-tags">
-            <span class="tag">Java</span>
-            <span class="tag">PHP</span>
-            <span class="tag">Kotlin</span>
-            <span class="tag">Swift</span>
-            <span class="tag">MySQL</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="exp-item">
-        <div class="exp-date">2024</div>
-        <div>
-          <p class="exp-company">Cambridge Assessment English</p>
-          <p class="exp-role">C1 Advanced (CAE)</p>
-          <p class="exp-desc">Certificación oficial de nivel C1 de inglés. Capacidad para trabajar con documentación técnica, comunicarse en entornos profesionales y colaborar con equipos internacionales.</p>
-          <div class="exp-tags">
-            <span class="tag">Inglés C1</span>
-            <span class="tag">Cambridge CAE</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"><hr /></div>
-
-  <!-- SKILLS -->
-  <section id="skills" class="fade-up">
-    <p class="section-eyebrow">Stack</p>
-    <h2 class="section-title">Tecnologías</h2>
-
-    <div class="skills-grid">
-      <div class="skill-group">
-        <p class="skill-group-title">Backend</p>
-        <div class="skill-tags">
-          <span class="skill-tag">Java</span>
-          <span class="skill-tag">Spring Boot</span>
-          <span class="skill-tag">PHP</span>
-          <span class="skill-tag">Laravel</span>
-          <span class="skill-tag">Symfony</span>
-        </div>
-      </div>
-
-      <div class="skill-group">
-        <p class="skill-group-title">Bases de datos</p>
-        <div class="skill-tags">
-          <span class="skill-tag">MySQL</span>
-          <span class="skill-tag">MariaDB</span>
-          <span class="skill-tag">SQLite</span>
-          <span class="skill-tag">DynamoDB</span>
-        </div>
-      </div>
-
-      <div class="skill-group">
-        <p class="skill-group-title">Frontend &amp; Web</p>
-        <div class="skill-tags">
-          <span class="skill-tag">Astro</span>
-          <span class="skill-tag">JavaScript</span>
-          <span class="skill-tag">HTML5</span>
-          <span class="skill-tag">CSS3</span>
-          <span class="skill-tag">Tailwind CSS</span>
-        </div>
-      </div>
-
-      <div class="skill-group">
-        <p class="skill-group-title">Mobile</p>
-        <div class="skill-tags">
-          <span class="skill-tag">Kotlin</span>
-          <span class="skill-tag">Android SDK</span>
-          <span class="skill-tag">Swift</span>
-          <span class="skill-tag">SwiftUI</span>
-          <span class="skill-tag">UIKit</span>
-          <span class="skill-tag">Xcode</span>
-        </div>
-      </div>
-
-      <div class="skill-group">
-        <p class="skill-group-title">Herramientas</p>
-        <div class="skill-tags">
-          <span class="skill-tag">Git</span>
-          <span class="skill-tag">GitHub</span>
-          <span class="skill-tag">Docker</span>
-          <span class="skill-tag">Maven</span>
-          <span class="skill-tag">Postman</span>
-          <span class="skill-tag">Figma</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"><hr /></div>
-
-  <!-- PROJECTS -->
-  <section id="projects" class="fade-up">
-    <p class="section-eyebrow">Trabajo</p>
-    <h2 class="section-title">Proyectos</h2>
-
-    <div class="projects-grid">
-
-      <div class="project-row">
-        <div>
-          <p class="project-type">ERP · Web · Prácticas</p>
-          <h3 class="project-name">ERP interno — CETEMET</h3>
-          <p class="project-desc">Desarrollo y ampliación de un módulo de un ERP interno para el registro de fichajes y la gestión de permisos de empleados. Trabajé sobre una base de código existente, implementando funcionalidades del panel de administración y participando en decisiones de estructura e interfaz.</p>
-          <div class="exp-tags">
-            <span class="tag">Astro</span>
-            <span class="tag">JavaScript</span>
-            <span class="tag">Tailwind CSS</span>
-          </div>
-        </div>
-        <a class="project-link" href="https://github.com/diegolijarcio388/Repositorio-ERP-Practicas" target="_blank" rel="noopener">
-          GitHub
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-        </a>
-      </div>
-
-      <div class="project-row">
-        <div>
-          <p class="project-type">Backend · REST API</p>
-          <h3 class="project-name">Task Manager API</h3>
-          <p class="project-desc">API REST desarrollada con Java y Spring Boot para la gestión de tareas, con operaciones CRUD, persistencia en MariaDB, arquitectura por capas y gestión personalizada de errores.</p>
-          <div class="exp-tags">
-            <span class="tag">Java</span>
-            <span class="tag">Spring Boot</span>
-            <span class="tag">Spring Data JPA</span>
-            <span class="tag">MariaDB</span>
-            <span class="tag">Maven</span>
-          </div>
-        </div>
-        <a class="project-link" href="https://github.com/diegolijarcio388/Task-Manager-Api" target="_blank" rel="noopener">
-          GitHub
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-        </a>
-      </div>
-
-      <div class="project-row">
-        <div>
-          <p class="project-type">iOS · Swift</p>
-          <h3 class="project-name">ServiHogar — Aplicación iOS</h3>
-          <p class="project-desc">Aplicación desarrollada como parte del proyecto final de DAM. Me encargué íntegramente de la interfaz y del flujo de navegación de la versión iOS, incluyendo la selección y captura de imágenes.</p>
-          <div class="exp-tags">
-            <span class="tag">Swift</span>
-            <span class="tag">SwiftUI</span>
-            <span class="tag">UIKit</span>
-            <span class="tag">Xcode</span>
-          </div>
-        </div>
-        <a class="project-link" href="https://github.com/diegolijarcio388/Proyecto-ServiHogar" target="_blank" rel="noopener">
-          GitHub
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-        </a>
-      </div>
-
-      <div class="project-row">
-        <div>
-          <p class="project-type">Android · Kotlin</p>
-          <h3 class="project-name">Game of Thrones — Android</h3>
-          <p class="project-desc">Aplicación Android para explorar personajes de Game of Thrones, con login, listado mediante RecyclerView, vista de detalle y datos cargados desde un fichero JSON local.</p>
-          <div class="exp-tags">
-            <span class="tag">Kotlin</span>
-            <span class="tag">RecyclerView</span>
-            <span class="tag">Navigation Component</span>
-            <span class="tag">Gson</span>
-            <span class="tag">Glide</span>
-          </div>
-        </div>
-        <a class="project-link" href="https://github.com/diegolijarcio388/Game-of-Thrones-Kotlin" target="_blank" rel="noopener">
-          GitHub
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-        </a>
-      </div>
-
-    </div>
-  </section>
-
-  <div class="divider"><hr /></div>
-
-  <!-- CONTACT -->
-  <section id="contact" class="fade-up">
-    <div class="contact-wrap">
-      <p class="section-eyebrow" style="text-align:center">Contacto</p>
-      <h2 class="contact-headline">¿Hablamos?</h2>
-      <p class="contact-sub">Busco mi primera posición estable como desarrollador, especialmente en oportunidades relacionadas con backend y desarrollo web. Si crees que mi perfil puede encajar en tu equipo, estaré encantado de hablar.</p>
-      <div class="contact-links">
-        <a class="btn-primary" href="mailto:diegolijarcio388@gmail.com">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
-          Contactar por email
-        </a>
-        <a class="btn-ghost" href="https://www.linkedin.com/in/diego-lijarcio-merino/" target="_blank" rel="noopener">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-        LinkedIn
-      </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <span class="footer-text">© 2026 Diego Lijarcio</span>
-    <div class="footer-links">
-      <a href="https://github.com/diegolijarcio388" target="_blank" rel="noopener">GitHub</a>
-      <a href="https://www.linkedin.com/in/diego-lijarcio-merino/" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="mailto:diegolijarcio388@gmail.com">Email</a>
-    </div>
-  </footer>
-
-  <script>
-    async function descargarCV() {
-      const cvUrl = new URL('./assests/Diego_Lijarcio_CV.pdf', window.location.href);
-
-      try {
-        const response = await fetch(cvUrl);
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
-        const blob = await response.blob();
-        const blobUrl = URL.createObjectURL(blob);
-
-        const link = document.createElement('a');
-        link.href = blobUrl;
-        link.download = 'Diego_Lijarcio_CV.pdf';
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-
-        URL.revokeObjectURL(blobUrl);
-      } catch (error) {
-        window.open(cvUrl.href, '_blank', 'noopener');
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Diego Lijarcio — Dev</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&amp;family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      :root {
+        --bg:        #0A0A0C;
+        --bg2:       #111114;
+        --bg3:       #18181C;
+        --border:    #222228;
+        --muted:     #60606A;
+        --body:      #8E8E99;
+        --text:      #DDDDE8;
+        --accent:    #5B7FFF;
+        --accent2:   #8BA3FF;
+        --white:     #F0F0F5;
+        --green:     #34D399;
       }
-    }
 
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
-      });
-    }, { threshold: 0.08 });
-    document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
-  </script>
-</body>
+      html { scroll-behavior: smooth; }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: 'DM Sans', sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* ── NAV ── */
+      nav {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.1rem 2.5rem;
+        background: rgba(10,10,12,0.90);
+        backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-logo {
+        font-family: 'DM Mono', monospace;
+        font-weight: 500;
+        font-size: 1rem;
+        color: var(--white);
+        letter-spacing: -0.01em;
+      }
+      .nav-logo em { color: var(--accent); font-style: normal; }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+      .nav-links a {
+        font-size: 0.875rem;
+        color: var(--muted);
+        text-decoration: none;
+        transition: color .2s;
+      }
+      .nav-links a:hover { color: var(--white); }
+
+      .nav-cta {
+        font-size: 0.82rem;
+        font-weight: 500;
+        color: var(--white);
+        background: var(--accent);
+        text-decoration: none;
+        padding: 0.45rem 1.1rem;
+        border-radius: 6px;
+        transition: opacity .2s;
+        letter-spacing: 0.01em;
+      }
+      .nav-cta:hover { opacity: 0.85; }
+
+      /* ── HERO ── */
+      #hero {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 8rem 2.5rem 5rem;
+        max-width: 860px;
+        margin: 0 auto;
+      }
+
+      .hero-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: 'DM Mono', monospace;
+        font-size: 0.75rem;
+        color: var(--green);
+        letter-spacing: 0.05em;
+        margin-bottom: 2rem;
+      }
+      .hero-tag::before {
+        content: '';
+        display: inline-block;
+        width: 6px; height: 6px;
+        background: var(--green);
+        border-radius: 50%;
+      }
+
+      .hero-name {
+        font-size: clamp(2.6rem, 6.5vw, 5rem);
+        font-weight: 600;
+        line-height: 1.05;
+        letter-spacing: -0.035em;
+        color: var(--white);
+        margin-bottom: 0.75rem;
+      }
+
+      .hero-title {
+        font-size: clamp(1rem, 2.2vw, 1.4rem);
+        font-weight: 300;
+        color: var(--body);
+        letter-spacing: -0.01em;
+        margin-bottom: 2.5rem;
+      }
+      .hero-title strong { color: var(--accent2); font-weight: 500; }
+
+      .hero-bio {
+        font-size: 1rem;
+        color: var(--body);
+        max-width: 520px;
+        line-height: 1.8;
+        margin-bottom: 2.5rem;
+      }
+      .hero-bio b { color: var(--text); font-weight: 500; }
+
+      .hero-actions {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        margin-bottom: 3.5rem;
+      }
+
+      .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--accent);
+        color: var(--white);
+        font-weight: 500;
+        font-size: 0.875rem;
+        padding: 0.7rem 1.4rem;
+        border-radius: 6px;
+        text-decoration: none;
+        transition: opacity .2s, transform .15s;
+        letter-spacing: 0.005em;
+      }
+      .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+
+      .btn-ghost {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: transparent;
+        color: var(--body);
+        font-weight: 400;
+        font-size: 0.875rem;
+        padding: 0.7rem 1.4rem;
+        border-radius: 6px;
+        border: 1px solid var(--border);
+        text-decoration: none;
+        transition: border-color .2s, color .2s, transform .15s;
+      }
+      .btn-ghost:hover { border-color: var(--muted); color: var(--white); transform: translateY(-1px); }
+
+      .hero-meta {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+      }
+      .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 0.45rem;
+        font-size: 0.8rem;
+        color: var(--muted);
+        font-family: 'DM Mono', monospace;
+      }
+      .meta-dot {
+        width: 5px; height: 5px;
+        border-radius: 50%;
+        background: var(--muted);
+      }
+      .meta-dot.live { background: var(--green); box-shadow: 0 0 0 2px rgba(52,211,153,.2); }
+
+      /* ── SECTIONS ── */
+      section {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 5rem 2.5rem;
+      }
+
+      .section-eyebrow {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.72rem;
+        color: var(--accent);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-bottom: 0.6rem;
+      }
+
+      .section-title {
+        font-size: clamp(1.5rem, 3vw, 2.2rem);
+        font-weight: 600;
+        color: var(--white);
+        letter-spacing: -0.025em;
+        margin-bottom: 2.5rem;
+      }
+
+      /* ── DIVIDER ── */
+      .divider {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 0 2.5rem;
+      }
+      .divider hr {
+        border: none;
+        border-top: 1px solid var(--border);
+      }
+
+      /* ── EXPERIENCE ── */
+      .exp-list { display: flex; flex-direction: column; }
+
+      .exp-item {
+        display: grid;
+        grid-template-columns: 130px 1fr;
+        gap: 2.5rem;
+        padding: 2.5rem 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .exp-item:first-child { border-top: 1px solid var(--border); }
+
+      .exp-date {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        padding-top: 0.25rem;
+        line-height: 1.7;
+      }
+
+      .exp-company {
+        font-size: 0.72rem;
+        font-weight: 500;
+        color: var(--accent);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 0.25rem;
+      }
+
+      .exp-role {
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--white);
+        margin-bottom: 0.65rem;
+        letter-spacing: -0.01em;
+      }
+
+      .exp-desc {
+        font-size: 0.925rem;
+        color: var(--body);
+        line-height: 1.75;
+        margin-bottom: 1rem;
+      }
+
+      .exp-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+      }
+
+      .tag {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.68rem;
+        color: var(--muted);
+        background: var(--bg2);
+        border: 1px solid var(--border);
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+        letter-spacing: 0.02em;
+      }
+
+      /* ── SKILLS ── */
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .skill-group {
+        background: var(--bg2);
+        padding: 1.5rem;
+      }
+
+      .skill-group:nth-child(1),
+      .skill-group:nth-child(2),
+      .skill-group:nth-child(3) {
+        grid-column: span 2;
+      }
+
+      .skill-group:nth-child(4),
+      .skill-group:nth-child(5) {
+        grid-column: span 3;
+      }
+
+      .skill-group-title {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.68rem;
+        font-weight: 500;
+        color: var(--muted);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+      }
+
+      .skill-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+      }
+
+      .skill-tag {
+        font-size: 0.82rem;
+        color: var(--text);
+        background: var(--bg3);
+        border: 1px solid var(--border);
+        padding: 0.25rem 0.6rem;
+        border-radius: 4px;
+        transition: border-color .2s, color .2s;
+      }
+      .skill-tag:hover { border-color: var(--accent); color: var(--accent2); }
+
+      /* ── PROJECTS ── */
+      .projects-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      .project-row {
+        background: var(--bg2);
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: start;
+        gap: 2rem;
+        padding: 2rem 2rem;
+        transition: background .2s;
+      }
+      .project-row:hover { background: var(--bg3); }
+
+      .project-type {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.68rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 0.4rem;
+      }
+
+      .project-name {
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--white);
+        letter-spacing: -0.01em;
+        margin-bottom: 0.55rem;
+      }
+
+      .project-desc {
+        font-size: 0.9rem;
+        color: var(--body);
+        line-height: 1.7;
+        max-width: 540px;
+        margin-bottom: 1rem;
+      }
+
+      .project-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-family: 'DM Mono', monospace;
+        font-size: 0.72rem;
+        color: var(--accent);
+        text-decoration: none;
+        letter-spacing: 0.02em;
+        white-space: nowrap;
+        padding-top: 0.25rem;
+        transition: color .2s;
+      }
+      .project-link:hover { color: var(--accent2); }
+
+      /* ── CONTACT ── */
+      #contact {
+        text-align: center;
+      }
+
+      .contact-wrap {
+        max-width: 480px;
+        margin: 0 auto;
+      }
+
+      .contact-headline {
+        font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+        font-weight: 600;
+        color: var(--white);
+        letter-spacing: -0.03em;
+        margin-bottom: 1rem;
+        line-height: 1.1;
+      }
+
+      .contact-sub {
+        font-size: 0.95rem;
+        color: var(--body);
+        margin-bottom: 2rem;
+        line-height: 1.7;
+      }
+
+      .contact-links {
+        display: flex;
+        justify-content: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+
+      /* ── FOOTER ── */
+      footer {
+        border-top: 1px solid var(--border);
+        padding: 1.75rem 2.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 860px;
+        margin: 0 auto;
+      }
+
+      .footer-text {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+      }
+
+      .footer-links {
+        display: flex;
+        gap: 1.5rem;
+      }
+      .footer-links a {
+        font-size: 0.8rem;
+        color: var(--muted);
+        text-decoration: none;
+        transition: color .2s;
+      }
+      .footer-links a:hover { color: var(--text); }
+
+      /* ── RESPONSIVE ── */
+      @media (max-width: 680px) {
+        nav { padding: 1rem 1.25rem; }
+        .nav-links { display: none; }
+        #hero, section { padding-left: 1.25rem; padding-right: 1.25rem; }
+        .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+        .projects-grid { grid-template-columns: 1fr; }
+        .project-row { grid-template-columns: 1fr; }
+        .skills-grid { grid-template-columns: 1fr; }
+        .skill-group:nth-child(n) { grid-column: span 1; }
+        footer { flex-direction: column; gap: 1rem; text-align: center; }
+      }
+
+      /* ── SCROLL FADE ── */
+      .fade-up {
+        opacity: 0;
+        transform: translateY(18px);
+        transition: opacity .55s ease, transform .55s ease;
+      }
+      .fade-up.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .fade-up { opacity: 1; transform: none; transition: none; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- NAV -->
+    <nav>
+      <span class="nav-logo">diego<em>.</em>dev</span>
+      <ul class="nav-links">
+        <li><a href="#experience">Experiencia</a></li>
+        <li><a href="#skills">Stack</a></li>
+        <li><a href="#projects">Proyectos</a></li>
+        <li><a href="#contact">Contacto</a></li>
+      </ul>
+      <a class="nav-cta" href="mailto:diegolijarcio388@gmail.com">Escríbeme</a>
+    </nav>
+
+    <!-- HERO -->
+    <section id="hero">
+      <p class="hero-tag">Disponible para trabajar</p>
+      <h1 class="hero-name">Diego Lijarcio Merino</h1>
+      <p class="hero-title">Desarrollador de Software Junior · <strong>Backend · Java / Spring Boot</strong></p>
+
+      <p class="hero-bio">Desarrollador de software junior titulado en DAM, con experiencia práctica en desarrollo web y backend y proyectos personales con <b>Java y Spring Boot</b>. Cuento con un nivel <b>C1 de inglés certificado por Cambridge</b> y busco mi primera oportunidad laboral como desarrollador junior, con especial interés en backend y abierto a seguir creciendo en otras tecnologías.</p>
+
+      <div class="hero-actions">
+        <a class="btn-primary" href="mailto:diegolijarcio388@gmail.com">
+          <svg fill="none" height="13" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="13"><rect height="16" rx="2" width="20" x="2" y="4"></rect><path d="m2 7 10 7 10-7"></path></svg>
+          Contactar
+        </a>
+        <button class="btn-ghost" onclick="descargarCV()" style="cursor:pointer; font-family:inherit;" type="button">
+          <svg fill="none" height="13" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="13"><path d="M12 3v12m0 0 4-4m-4 4-4-4"></path><path d="M5 21h14"></path></svg>
+          Descargar CV
+        </button>
+        <a class="btn-ghost" href="https://github.com/diegolijarcio388" rel="noopener" target="_blank">
+          <svg fill="currentColor" height="13" viewbox="0 0 24 24" width="13"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12"></path></svg>
+          GitHub
+        </a>
+        <a class="btn-ghost" href="https://www.linkedin.com/in/diego-lijarcio-merino/" rel="noopener" target="_blank">
+          <svg fill="currentColor" height="13" viewbox="0 0 24 24" width="13"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+          LinkedIn
+        </a>
+      </div>
+
+      <div class="hero-meta">
+        <span class="meta-item"><span class="meta-dot"></span>Jaén, España</span>
+        <span class="meta-item"><span class="meta-dot"></span>Abierto a reubicación</span>
+        <span class="meta-item"><span class="meta-dot"></span>Inglés C1 CAE</span>
+        <span class="meta-item"><span class="meta-dot"></span>Presencial / Híbrido / Remoto</span>
+      </div>
+    </section>
+
+    <div class="divider"><hr/></div>
+
+    <!-- EXPERIENCE -->
+    <section class="fade-up" id="experience">
+      <p class="section-eyebrow">Trayectoria</p>
+      <h2 class="section-title">Experiencia &amp; Formación</h2>
+
+      <div class="exp-list">
+        <div class="exp-item">
+          <div class="exp-date">Abr – Jun<br/>2026</div>
+          <div>
+            <p class="exp-company">CETEMET · Jaén</p>
+            <p class="exp-role">Frontend Developer — Prácticas</p>
+            <p class="exp-desc">Participé en el desarrollo y ampliación de un módulo de un ERP interno para el registro de fichajes y la gestión de permisos de empleados. Trabajé principalmente con <b>Astro, JavaScript y Tailwind CSS</b>, implementando y mejorando funcionalidades del panel de administración orientadas a usuarios no técnicos. Trabajé sobre una base de código existente y participé en decisiones relacionadas con la estructura y la interfaz del módulo.</p>
+            <div class="exp-tags">
+              <span class="tag">Astro</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">Tailwind CSS</span>
+              <span class="tag">Scrum</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-date">Ene – Feb<br/>2025</div>
+          <div>
+            <p class="exp-company">CODE ARTS</p>
+            <p class="exp-role">Backend Developer Junior — Prácticas</p>
+            <p class="exp-desc">Realicé tareas de iniciación y apoyo en backend sobre un proyecto existente con <b>PHP y Symfony</b>. Utilicé <b>Docker</b> como parte del entorno de desarrollo y realicé operaciones básicas con <b>SQLite y DynamoDB</b>, familiarizándome con el trabajo sobre una base de código y un entorno profesional ya establecidos.</p>
+            <div class="exp-tags">
+              <span class="tag">PHP</span>
+              <span class="tag">Symfony</span>
+              <span class="tag">Docker</span>
+              <span class="tag">SQLite</span>
+              <span class="tag">DynamoDB</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-date">2024 – 2026</div>
+          <div>
+            <p class="exp-company">CESUR Linares</p>
+            <p class="exp-role">Técnico Superior en DAM</p>
+            <p class="exp-desc">Formación orientada al desarrollo de aplicaciones multiplataforma, con trabajo práctico en backend, desarrollo web, bases de datos y aplicaciones móviles para Android e iOS. <b>Nota media: 8,47/10.</b></p>
+            <div class="exp-tags">
+              <span class="tag">Java</span>
+              <span class="tag">PHP</span>
+              <span class="tag">Kotlin</span>
+              <span class="tag">Swift</span>
+              <span class="tag">MySQL</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-date">2024</div>
+          <div>
+            <p class="exp-company">Cambridge Assessment English</p>
+            <p class="exp-role">C1 Advanced (CAE)</p>
+            <p class="exp-desc">Certificación oficial de nivel C1 de inglés. Capacidad para trabajar con documentación técnica, comunicarse en entornos profesionales y colaborar con equipos internacionales.</p>
+            <div class="exp-tags">
+              <span class="tag">Inglés C1</span>
+              <span class="tag">Cambridge CAE</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"><hr/></div>
+
+    <!-- SKILLS -->
+    <section class="fade-up" id="skills">
+      <p class="section-eyebrow">Stack</p>
+      <h2 class="section-title">Tecnologías</h2>
+
+      <div class="skills-grid">
+        <div class="skill-group">
+          <p class="skill-group-title">Backend</p>
+          <div class="skill-tags">
+            <span class="skill-tag">Java</span>
+            <span class="skill-tag">Spring Boot</span>
+            <span class="skill-tag">PHP</span>
+            <span class="skill-tag">Laravel</span>
+            <span class="skill-tag">Symfony</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <p class="skill-group-title">Bases de datos</p>
+          <div class="skill-tags">
+            <span class="skill-tag">MySQL</span>
+            <span class="skill-tag">MariaDB</span>
+            <span class="skill-tag">SQLite</span>
+            <span class="skill-tag">DynamoDB</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <p class="skill-group-title">Frontend &amp; Web</p>
+          <div class="skill-tags">
+            <span class="skill-tag">Astro</span>
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">HTML5</span>
+            <span class="skill-tag">CSS3</span>
+            <span class="skill-tag">Tailwind CSS</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <p class="skill-group-title">Mobile</p>
+          <div class="skill-tags">
+            <span class="skill-tag">Kotlin</span>
+            <span class="skill-tag">Android SDK</span>
+            <span class="skill-tag">Swift</span>
+            <span class="skill-tag">SwiftUI</span>
+            <span class="skill-tag">UIKit</span>
+            <span class="skill-tag">Xcode</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <p class="skill-group-title">Herramientas</p>
+          <div class="skill-tags">
+            <span class="skill-tag">Git</span>
+            <span class="skill-tag">GitHub</span>
+            <span class="skill-tag">Docker</span>
+            <span class="skill-tag">Maven</span>
+            <span class="skill-tag">Postman</span>
+            <span class="skill-tag">Figma</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"><hr/></div>
+
+    <!-- PROJECTS -->
+    <section class="fade-up" id="projects">
+      <p class="section-eyebrow">Trabajo</p>
+      <h2 class="section-title">Proyectos</h2>
+
+      <div class="projects-grid">
+
+        <div class="project-row">
+          <div>
+            <p class="project-type">Proyecto personal · Backend · REST API · En desarrollo</p>
+            <h3 class="project-name">Task Manager API</h3>
+            <p class="project-desc">API REST desarrollada con Java y Spring Boot para la gestión de tareas, con operaciones CRUD, filtros, búsqueda, paginación, DTOs, validación, gestión centralizada de excepciones y tests de controlador.</p>
+            <div class="exp-tags"><span class="tag">Java 21</span><span class="tag">Spring Boot</span><span class="tag">Spring Data JPA</span><span class="tag">MariaDB</span><span class="tag">JUnit</span><span class="tag">Mockito</span><span class="tag">Postman</span></div>
+          </div>
+          <a class="project-link" href="https://github.com/diegolijarcio388/Task-Manager-Api" rel="noopener" target="_blank">
+            Ver proyecto
+            <svg fill="none" height="12" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="12"><path d="M7 17L17 7M17 7H7M17 7v10"></path></svg>
+          </a>
+        </div><div class="project-row">
+          <div>
+            <p class="project-type">ERP · Web · Prácticas</p>
+            <h3 class="project-name">ERP interno — CETEMET</h3>
+            <p class="project-desc">Desarrollo y ampliación de un módulo de un ERP interno para el registro de fichajes y la gestión de permisos de empleados. Trabajé sobre una base de código existente, implementando funcionalidades del panel de administración y participando en decisiones de estructura e interfaz.</p>
+            <div class="exp-tags">
+              <span class="tag">Astro</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">Tailwind CSS</span>
+            </div>
+          </div>
+          <a class="project-link" href="https://github.com/diegolijarcio388/Repositorio-ERP-Practicas" rel="noopener" target="_blank">
+            Ver proyecto
+            <svg fill="none" height="12" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="12"><path d="M7 17L17 7M17 7H7M17 7v10"></path></svg>
+          </a>
+        </div>
+
+        <div class="project-row">
+          <div>
+            <p class="project-type">iOS · Swift</p>
+            <h3 class="project-name">ServiHogar — Aplicación iOS</h3>
+            <p class="project-desc">Aplicación desarrollada como parte del proyecto final de DAM. Me encargué íntegramente de la interfaz y del flujo de navegación de la versión iOS, incluyendo la selección y captura de imágenes.</p>
+            <div class="exp-tags">
+              <span class="tag">Swift</span>
+              <span class="tag">SwiftUI</span>
+              <span class="tag">UIKit</span>
+              <span class="tag">Xcode</span>
+            </div>
+          </div>
+          <a class="project-link" href="https://github.com/diegolijarcio388/Proyecto-ServiHogar" rel="noopener" target="_blank">
+            Ver proyecto
+            <svg fill="none" height="12" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="12"><path d="M7 17L17 7M17 7H7M17 7v10"></path></svg>
+          </a>
+        </div>
+
+        <div class="project-row">
+          <div>
+            <p class="project-type">Android · Kotlin</p>
+            <h3 class="project-name">Game of Thrones — Android</h3>
+            <p class="project-desc">Aplicación Android para explorar personajes de Game of Thrones, con login, listado mediante RecyclerView, vista de detalle y datos cargados desde un fichero JSON local.</p>
+            <div class="exp-tags">
+              <span class="tag">Kotlin</span>
+              <span class="tag">RecyclerView</span>
+              <span class="tag">Navigation Component</span>
+              <span class="tag">Gson</span>
+              <span class="tag">Glide</span>
+            </div>
+          </div>
+          <a class="project-link" href="https://github.com/diegolijarcio388/Game-of-Thrones-Kotlin" rel="noopener" target="_blank">
+            Ver proyecto
+            <svg fill="none" height="12" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="12"><path d="M7 17L17 7M17 7H7M17 7v10"></path></svg>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <div class="divider"><hr/></div>
+
+    <!-- CONTACT -->
+    <section class="fade-up" id="contact">
+      <div class="contact-wrap">
+        <p class="section-eyebrow" style="text-align:center">Contacto</p>
+        <h2 class="contact-headline">¿Hablamos?</h2>
+        <p class="contact-sub">Busco mi primera posición estable como desarrollador, especialmente en oportunidades relacionadas con backend y desarrollo web. Si crees que mi perfil puede encajar en tu equipo, estaré encantado de hablar.</p>
+        <div class="contact-links">
+          <a class="btn-primary" href="mailto:diegolijarcio388@gmail.com">
+            <svg fill="none" height="13" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="13"><rect height="16" rx="2" width="20" x="2" y="4"></rect><path d="m2 7 10 7 10-7"></path></svg>
+            Contactar por email
+          </a>
+          <a class="btn-ghost" href="https://www.linkedin.com/in/diego-lijarcio-merino/" rel="noopener" target="_blank">
+            <svg fill="currentColor" height="13" viewbox="0 0 24 24" width="13"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <span class="footer-text">© 2026 Diego Lijarcio</span>
+      <div class="footer-links">
+        <a href="https://github.com/diegolijarcio388" rel="noopener" target="_blank">GitHub</a>
+        <a href="https://www.linkedin.com/in/diego-lijarcio-merino/" rel="noopener" target="_blank">LinkedIn</a>
+        <a href="mailto:diegolijarcio388@gmail.com">Email</a>
+      </div>
+    </footer>
+
+    <script>
+      async function descargarCV() {
+        // Vite publica "public" en la raíz; Live Server conserva la carpeta.
+        const cvPaths = [
+          './assests/Diego_Lijarcio_CV.pdf',
+          './public/assests/Diego_Lijarcio_CV.pdf'
+        ];
+
+        for (const cvPath of cvPaths) {
+          try {
+            const response = await fetch(new URL(cvPath, document.baseURI));
+            if (!response.ok) continue;
+
+            const blob = await response.blob();
+            // Evita descargar el HTML que algunos servidores devuelven para rutas inexistentes.
+            if (await blob.slice(0, 5).text() !== '%PDF-') continue;
+
+            const blobUrl = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = blobUrl;
+            link.download = 'Diego_Lijarcio_CV.pdf';
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+
+            setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+            return;
+          } catch (error) {
+            // Prueba la siguiente ruta si el servidor no permite acceder a esta.
+          }
+        }
+
+        alert('No se ha podido descargar el CV. Inténtalo de nuevo más tarde.');
+      }
+
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+        });
+      }, { threshold: 0.08 });
+      document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+    </script>
+  </body>
 </html>
